@@ -47,6 +47,27 @@ class User
     private $password;
 
     /**
+     * @ORM\Column(type="boolean", options={"default"= 0})
+     */
+    private $userDisabled;
+
+    /**
+     * @return mixed
+     */
+    public function getUserDisabled()
+    {
+        return $this->userDisabled;
+    }
+
+    /**
+     * @param mixed $userDisabled
+     */
+    public function setUserDisabled($userDisabled): void
+    {
+        $this->userDisabled = $userDisabled;
+    }
+
+    /**
      * @ORM\Column(type="date")
      */
     private $registerDate;
