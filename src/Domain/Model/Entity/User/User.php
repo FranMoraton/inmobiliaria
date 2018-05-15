@@ -24,6 +24,24 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
+    public function __construct()
+    {
+        $this->houses = new ArrayCollection();
+        $this->bids = new ArrayCollection();
+    }
+
+    public static function fromRegisterForm($DNI, $password, $birthDate, $Role): self
+    {
+        $user = new User;
+        $user->DNI = $DNI;
+        $user->password = $password;
+        $user->userDisabled = 0;
+        $user->registerDate = new \DateTime();
+        $user->birthDate = $birthDate;
+        $user->Role = $Role;
+
+        return $user;
+    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -50,6 +68,7 @@ class User
      * @ORM\Column(type="boolean", options={"default"= 0})
      */
     private $userDisabled;
+
 
     /**
      * @return mixed
@@ -93,11 +112,6 @@ class User
      */
     private $bids;
 
-    public function __construct()
-    {
-        $this->houses = new ArrayCollection();
-        $this->bids = new ArrayCollection();
-    }
 
     public function getId()
     {

@@ -14,5 +14,5 @@ LogInUser:
 
 RegisterUser:
     path: /register
-    controller: App\Infrastructure\Controller\User\RegisterController:__invoke
+    controller: App\Infrastructure\Controller\User\RegisterUserController:__invoke
     methods: [POST]

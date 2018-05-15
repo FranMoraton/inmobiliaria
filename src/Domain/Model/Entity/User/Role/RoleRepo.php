@@ -8,8 +8,8 @@
 
 namespace App\Domain\Model\Entity\User\Role;
 
-
 interface RoleRepo
 {
-
+    public function returnRole(int $const): ?Role;
+    public function persistAndFlush(Role $role): void;
 }

@@ -8,34 +8,34 @@
 
 namespace App\Infrastructure\Controller\User;
 
+use App\Application\User\RegisterUser\RegisterUser;
+use App\Application\User\RegisterUser\RegisterUserCommand;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class RegisterUserController
 {
-//    private $handler;
-//
-//    /**
-//     * LogInUserController constructor.
-//     * @param LogInUser $handler
-//     */
-//    public function __construct(LogInUser $handler)
-//    {
-//        $this->handler = $handler;
-//    }
-//
-//    /**
-//     * @param Request $request
-//     * @return JsonResponse
-//     * @throws \App\Domain\Model\Entity\User\PasswordDoNotMatch
-//     * @throws \App\Domain\Model\Entity\User\UserNotFound
-//     * @throws \Assert\AssertionFailedException
-//     */
-//    public function __invoke(Request $request)
-//    {
-//        $dni = $request->request->get("dni");
-//        $password = $request->request->get("password");
-//
-//        $list = $this->handler->handle(new LogInUserCommand($dni, $password));
-//
-//        return new JsonResponse($list);
-//    }
+    private $handler;
+
+    public function __construct(RegisterUser $handler)
+    {
+        $this->handler = $handler;
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \App\Domain\Model\Entity\User\UserAlreadyExist
+     * @throws \Assert\AssertionFailedException
+     */
+    public function __invoke(Request $request)
+    {
+        $dni = $request->request->get("dni");
+        $password = $request->request->get("password");
+        $birthDate = $request->request->get("birthDate");
+
+        $list = $this->handler->handle(new RegisterUserCommand($dni, $password, $birthDate));
+
+        return new JsonResponse($list);
+    }
 }
