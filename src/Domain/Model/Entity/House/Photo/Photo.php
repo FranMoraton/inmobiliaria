@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(
  *     repositoryClass=
- *     "Inventory\Management\Infrastructure\Repository\House\Photo\PhotoRepository"
+ *     "App\Infrastructure\Repository\House\Photo\PhotoRepository"
  * )
  * @ORM\Table(name="photo")
  */

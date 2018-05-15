@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(
  *     repositoryClass=
- *     "Inventory\Management\Infrastructure\Repository\User\Role\RoleRepository"
+ *     "App\Infrastructure\Repository\User\Role\RoleRepository"
  * )
  * @ORM\Table(name="Role")
  */
@@ -25,6 +25,7 @@ class Role
 {
     const USER = 1;
     const ADMIN = 2;
+    const GUEST = 3;
 
     /**
      * @ORM\Id()

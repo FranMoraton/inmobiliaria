@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(
  *     repositoryClass=
- *     "Inventory\Management\Infrastructure\Repository\House\Coordinates\CoordinatesRepository"
+ *     "App\Infrastructure\Repository\House\Coordinates\CoordinatesRepository"
  * )
  * @ORM\Table(name="coordinates")
  */

@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(
  *     repositoryClass=
- *     "Inventory\Management\Infrastructure\Repository\User\UserRepository"
+            "App\Infrastructure\Repository\User\UserRepository"
  * )
  * @ORM\Table(name="User")
  */
@@ -42,7 +42,7 @@ class User
     private $photo;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string")
      */
     private $password;
 

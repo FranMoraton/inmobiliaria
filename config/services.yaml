@@ -25,3 +25,59 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+
+
+    app.bid_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager',getRepository]
+        arguments:
+            - App\Domain\Model\Entity\Bid\Bid
+
+    App\Domain\Model\Entity\Bid\BidRepo:
+        alias: app.bid_repository
+
+    app.house_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager',getRepository]
+        arguments:
+            - App\Domain\Model\Entity\House\House
+
+    App\Domain\Model\Entity\House\HouseRepo:
+        alias: app.house_repository
+
+    app.coordinates_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager',getRepository]
+        arguments:
+            - App\Domain\Model\Entity\House\Coordinates\Coordinates
+
+    App\Domain\Model\Entity\House\Coordinates\CoordinatesRepo:
+        alias: app.coordinates_repository
+
+    app.photo_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager',getRepository]
+        arguments:
+            - App\Domain\Model\Entity\House\Photo\Photo
+
+    App\Domain\Model\Entity\House\Photo\PhotoRepo:
+        alias: app.photo_repository
+
+    app.user_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager',getRepository]
+        arguments:
+            - App\Domain\Model\Entity\User\User
+
+    App\Domain\Model\Entity\User\UserRepo:
+        alias: app.user_repository
+
+    app.role_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager',getRepository]
+        arguments:
+            - App\Domain\Model\Entity\User\Role\Role
+
+    App\Domain\Model\Entity\User\Role\RoleRepo:
+        alias: app.role_repository

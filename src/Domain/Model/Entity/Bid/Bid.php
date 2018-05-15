@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(
  *     repositoryClass=
- *     "Inventory\Management\Infrastructure\Repository\Bid\BidRepository"
+ *     "App\Infrastructure\Repository\Bid\BidRepository"
  * )
  * @ORM\Table(name="Bid")
  */

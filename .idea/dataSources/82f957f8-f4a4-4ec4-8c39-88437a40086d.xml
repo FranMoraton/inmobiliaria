@@ -1017,12 +1017,14 @@
       <Position>5</Position>
       <DataType>tinyint(1)|0</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="254" parent="242" name="accepted">
       <Position>6</Position>
       <DataType>tinyint(1)|0</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="255" parent="242" name="bidding_date">
@@ -1238,7 +1240,7 @@
     </column>
     <column id="293" parent="248" name="password">
       <Position>5</Position>
-      <DataType>varchar(20)|0</DataType>
+      <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -1254,15 +1256,22 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="296" parent="248" name="IDX_2DA17977D60322AC">
+    <column id="296" parent="248" name="user_disabled">
+      <Position>8</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="297" parent="248" name="IDX_2DA17977D60322AC">
       <ColNames>role_id</ColNames>
     </index>
-    <key id="297" parent="248" name="PRIMARY">
+    <key id="298" parent="248" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="298" parent="248" name="FK_2DA17977D60322AC">
+    <foreign-key id="299" parent="248" name="FK_2DA17977D60322AC">
       <ColNames>role_id</ColNames>
       <RefSchemaName>inmobiliaria</RefSchemaName>
       <RefTableName>role</RefTableName>

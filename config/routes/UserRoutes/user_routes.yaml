@@ -1,0 +1,18 @@
+ListUsers:
+    path: /
+    controller: App\Infrastructure\Controller\User\ListUsersController:__invoke
+
+ListUserByDni:
+    path: /{dni}
+    controller: App\Infrastructure\Controller\User\ListUserByDniController:__invoke
+    methods: [GET]
+
+LogInUser:
+    path: /login
+    controller: App\Infrastructure\Controller\User\LogInUserController:__invoke
+    methods: [POST]
+
+RegisterUser:
+    path: /register
+    controller: App\Infrastructure\Controller\User\RegisterController:__invoke
+    methods: [POST]

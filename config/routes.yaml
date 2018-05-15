@@ -1,3 +1,16 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+AdminRoutes:
+    resource: 'routes/AdminRoutes/admin_routes.yaml'
+    prefix: /admin
+
+BidRoutes:
+    resource: 'routes/BidRoutes/bid_routes.yaml'
+    prefix: /bid
+
+HouseRoutes:
+    resource: 'routes/HouseRoutes/house_routes.yaml'
+    prefix: /houses
+
+UserRoutes:
+    resource: 'routes/UserRoutes/user_routes.yaml'
+    prefix: /user
+

@@ -9,9 +9,10 @@
 namespace App\Infrastructure\Repository\User;
 
 use App\Domain\Model\Entity\User\User;
+use App\Domain\Model\Entity\User\UserRepo;
 use Doctrine\ORM\EntityRepository;
 
-class UserRepository extends EntityRepository
+class UserRepository extends EntityRepository implements UserRepo
 {
     /**
      * @param User $user
@@ -23,4 +24,16 @@ class UserRepository extends EntityRepository
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    public function findAllUsers(): array
+    {
+        return $this->findAll();
+    }
+
+    public function findUserByDni(string $dni): ?User
+    {
+         return $this->findOneBy(["DNI" => $dni]);
+    }
+
+
 }

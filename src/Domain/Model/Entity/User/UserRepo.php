@@ -8,8 +8,8 @@
 
 namespace App\Domain\Model\Entity\User;
 
-
 interface UserRepo
 {
-
+    public function findAllUsers(): array;
+    public function findUserByDni(string $dni): ?User;
 }

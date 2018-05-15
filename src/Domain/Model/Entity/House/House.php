@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(
  *     repositoryClass=
- *     "Inventory\Management\Infrastructure\Repository\House\HouseRepository"
+ *     "App\Infrastructure\Repository\House\HouseRepository"
  * )
  * @ORM\Table(name="House")
  */
