@@ -8,7 +8,12 @@
 
 namespace App\Domain\Model\Entity\Bid;
 
+use App\Domain\Model\Entity\User\User;
+
 interface BidRepo
 {
-
+    public function findBidById(int $id): ?Bid;
+    public function findAllBids(): array;
+    public function persistAndFlush(Bid $bid): void;
+    public function findBidsByOwner(User $user): array;
 }

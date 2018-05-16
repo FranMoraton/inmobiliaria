@@ -1,3 +1,24 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+AcceptBid:
+    path: /acceptbid
+    controller: App\Infrastructure\Controller\Bid\AcceptBidController:__invoke
+    methods: [POST]
+
+RejectBid:
+    path: /rejectbid
+    controller: App\Infrastructure\Controller\Bid\RejectBidController:__invoke
+    methods: [POST]
+
+#ListBidById:
+#    path: /login
+#    controller: App\Infrastructure\Controller\User\LogInUserController:__invoke
+#    methods: [POST]
+#
+#ListBidByOwner:
+#    path: /register
+#    controller: App\Infrastructure\Controller\User\RegisterUserController:__invoke
+#    methods: [POST]
+#
+#ListHouseBiddedByUser:
+#    path: /{dni}
+#    controller: App\Infrastructure\Controller\User\ListUserByDniController:__invoke
+#    methods: [GET]

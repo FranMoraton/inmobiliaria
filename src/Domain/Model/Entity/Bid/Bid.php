@@ -21,6 +21,22 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Bid
 {
+    private function __construct()
+    {
+    }
+
+    public static function createdByApi(House $house, User $user, int $money): self
+    {
+        $bid = new self;
+        $bid->setHouse($house);
+        $bid->setUserBidding($user);
+        $bid->setMoneyBidded($money);
+        $bid->setRejected(false);
+        $bid->setAccepted(false);
+        $bid->setBiddingDate(new \DateTime( date_create('now')->format('Y-m-d') ));
+
+        return $bid;
+    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -59,6 +75,7 @@ class Bid
      * @ORM\Column(type="date")
      */
     private $biddingDate;
+
 
     public function getId()
     {
