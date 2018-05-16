@@ -16,3 +16,8 @@ RegisterUser:
     path: /register
     controller: App\Infrastructure\Controller\User\RegisterUserController:__invoke
     methods: [POST]
+
+UpdateUser:
+    path: /update
+    controller: App\Infrastructure\Controller\User\UpdateUserController:__invoke
+    methods: [POST]
