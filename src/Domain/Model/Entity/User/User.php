@@ -36,7 +36,7 @@ class User
         $user->DNI = $DNI;
         $user->password = $password;
         $user->userDisabled = 0;
-        $user->registerDate = new \DateTime();
+        $user->registerDate = new \DateTime( date_create('now')->format('Y-m-d') );
         $user->birthDate = $birthDate;
         $user->Role = $Role;
 

@@ -58,10 +58,9 @@ class RegisterUser
         $newUser = User::fromRegisterForm(
             $registerUserCommand->getDni(),
             $password,
-            $registerUserCommand->getBirthDate(),
+            new \DateTime(date_create($registerUserCommand->getBirthDate())->format('Y-m-d')),
             $this->returnRole->__invoke(Role::USER)
         );
-        dump($newUser);
 
         $this->userRepository->persistAndFlush($newUser);
 
