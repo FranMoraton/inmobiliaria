@@ -8,10 +8,27 @@
 
 namespace App\Infrastructure\Controller\Bid;
 
+use App\Application\Bid\ListBidsByOwner\ListBidsByOwner;
+use App\Application\Bid\ListBidsByOwner\ListBidsByOwnerCommand;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 class ListBidsByOwnerController
 {
-    public function __construct()
+    private $handler;
+
+    public function __construct(ListBidsByOwner $handler)
     {
-        //return new JsonResponse($list["data"], $list["code"]);
+        $this->handler = $handler;
+    }
+
+    /**
+     * @param $dni
+     * @return JsonResponse
+     * @throws \Assert\AssertionFailedException
+     */
+    public function __invoke($dni)
+    {
+        $list = $this->handler->handle(new ListBidsByOwnerCommand($dni));
+        return new JsonResponse($list["data"], $list["code"]);
     }
 }

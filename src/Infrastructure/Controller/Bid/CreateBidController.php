@@ -8,7 +8,7 @@
 
 namespace App\Infrastructure\Controller\Bid;
 
-class CreateBid
+class CreateBidController
 {
 
     public function __construct()

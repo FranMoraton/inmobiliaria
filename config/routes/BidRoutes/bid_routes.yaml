@@ -1,3 +1,8 @@
+ListBids:
+    path: /listbids
+    controller: App\Infrastructure\Controller\Bid\ListBidsController:__invoke
+    methods: [GET]
+
 AcceptBid:
     path: /acceptbid
     controller: App\Infrastructure\Controller\Bid\AcceptBidController:__invoke
@@ -8,15 +13,20 @@ RejectBid:
     controller: App\Infrastructure\Controller\Bid\RejectBidController:__invoke
     methods: [POST]
 
-#ListBidById:
-#    path: /login
-#    controller: App\Infrastructure\Controller\User\LogInUserController:__invoke
-#    methods: [POST]
-#
-#ListBidByOwner:
-#    path: /register
-#    controller: App\Infrastructure\Controller\User\RegisterUserController:__invoke
-#    methods: [POST]
+ListBidByOwner:
+    path: /{dni}/bids
+    controller: App\Infrastructure\Controller\Bid\ListBidsByOwnerController:__invoke
+    methods: [GET]
+
+ListBidById:
+    path: /{id}
+    controller: App\Infrastructure\Controller\Bid\ListByIdController:__invoke
+    methods: [GET]
+
+#CreateBidController:
+#    path: /{dni}
+#    controller: App\Infrastructure\Controller\User\ListUserByDniController:__invoke
+#    methods: [GET]
 #
 #ListHouseBiddedByUser:
 #    path: /{dni}

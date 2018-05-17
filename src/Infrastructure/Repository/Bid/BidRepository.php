@@ -8,7 +8,6 @@
 
 namespace App\Infrastructure\Repository\Bid;
 
-
 use App\Domain\Model\Entity\Bid\Bid;
 use App\Domain\Model\Entity\Bid\BidRepo;
 use App\Domain\Model\Entity\User\User;
@@ -35,6 +34,6 @@ class BidRepository extends EntityRepository implements BidRepo
 
     public function findBidsByOwner(User $user): array
     {
-        return $this->findBy([ "user" => $user ]);
+        return $this->findBy([ "userBidding" => $user ]);
     }
 }

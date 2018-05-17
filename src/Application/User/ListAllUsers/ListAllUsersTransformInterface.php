@@ -10,5 +10,5 @@ namespace App\Application\User\ListAllUsers;
 
 interface ListAllUsersTransformInterface
 {
-    public function transform(array $users): array;
+    public function transform(array $bids): array;
 }

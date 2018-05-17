@@ -33,7 +33,7 @@ class Bid
         $bid->setMoneyBidded($money);
         $bid->setRejected(false);
         $bid->setAccepted(false);
-        $bid->setBiddingDate(new \DateTime( date_create('now')->format('Y-m-d') ));
+        $bid->setBiddingDate(new \DateTime(date_create('now')->format('Y-m-d')));
 
         return $bid;
     }
