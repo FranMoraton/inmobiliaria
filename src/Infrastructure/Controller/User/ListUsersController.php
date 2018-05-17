@@ -28,6 +28,6 @@ class ListUsersController
     public function __invoke()
     {
         $list = $this->handler->handle(new ListallUsersCommand());
-        return new JsonResponse($list);
+        return new JsonResponse($list["data"], $list["code"]);
     }
 }

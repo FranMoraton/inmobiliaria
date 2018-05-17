@@ -12,9 +12,11 @@ namespace App\Application\User\RegisterUser;
 use App\Domain\Model\Entity\User\Role\Role;
 use App\Domain\Model\Entity\User\User;
 use App\Domain\Model\Entity\User\UserRepo;
+use App\Domain\Model\HttpResponses\HttpResponses;
 use App\Domain\Services\User\CheckIfUserExist;
 use App\Domain\Services\User\EncodePassword;
 use App\Domain\Services\User\Role\ReturnRole;
+use App\Domain\Services\Util\ExceptionObserver\ListException;
 
 class RegisterUser
 {
@@ -44,17 +46,20 @@ class RegisterUser
         $this->encodePassword = $encodePassword;
         $this->userRepository = $userRepository;
         $this->returnRole = $returnRole;
+        ListException::instance()->restartExceptions();
+        ListException::instance()->attach($checkIfUserExist);
     }
 
-    /**
-     * @param RegisterUserCommand $registerUserCommand
-     * @return array
-     * @throws \App\Domain\Model\Entity\User\UserAlreadyExist
-     */
+
     public function handle(RegisterUserCommand $registerUserCommand)
     {
         $this->checkIfUserExist->__invoke($registerUserCommand->getDni());
         $password = $this->encodePassword->execute($registerUserCommand->getPassword());
+
+        if (ListException::instance()->checkForException()) {
+            return ListException::instance()->firstException();
+        }
+
         $newUser = User::fromRegisterForm(
             $registerUserCommand->getDni(),
             $password,
@@ -64,6 +69,9 @@ class RegisterUser
 
         $this->userRepository->persistAndFlush($newUser);
 
-        return $this->dataTransform->transform($newUser);
+        return [
+            "data" => $this->dataTransform->transform($newUser),
+            "code" => HttpResponses::OK
+            ];
     }
 }

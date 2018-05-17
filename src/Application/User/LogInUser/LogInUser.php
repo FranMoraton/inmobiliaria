@@ -8,8 +8,10 @@
 
 namespace App\Application\User\LogInUser;
 
+use App\Domain\Model\HttpResponses\HttpResponses;
 use App\Domain\Services\User\CheckPasswordForLogIn;
 use App\Domain\Services\User\FindUserByDni;
+use App\Domain\Services\Util\ExceptionObserver\ListException;
 
 class LogInUser
 {
@@ -26,20 +28,25 @@ class LogInUser
         $this->findUserByDni = $findUserByDni;
         $this->checkPasswordForLogIn = $checkPasswordForLogIn;
         $this->dataTransform = $dataTransform;
+        ListException::instance()->restartExceptions();
+        ListException::instance()->attach($findUserByDni);
+        ListException::instance()->attach($checkPasswordForLogIn);
     }
 
-    /**
-     * @param LogInUserCommand $logInUserCommand
-     * @return array
-     * @throws \App\Domain\Model\Entity\User\PasswordDoNotMatch
-     * @throws \App\Domain\Model\Entity\User\UserNotFound
-     */
+
     public function handle(LogInUserCommand $logInUserCommand)
     {
         $user = $this->findUserByDni->__invoke($logInUserCommand->getDni());
 
         $this->checkPasswordForLogIn->__invoke($user->getPassword(), $logInUserCommand->getPassword());
 
-        return $this->dataTransform->transform($user);
+        if (ListException::instance()->checkForException()) {
+            return ListException::instance()->firstException();
+        }
+
+        return [
+            "data" => $this->dataTransform->transform($user),
+            "code" => HttpResponses::OK
+            ];
     }
 }

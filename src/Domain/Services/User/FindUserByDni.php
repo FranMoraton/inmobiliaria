@@ -11,10 +11,13 @@ namespace App\Domain\Services\User;
 use App\Domain\Model\Entity\User\User;
 use App\Domain\Model\Entity\User\UserNotFound;
 use App\Domain\Model\Entity\User\UserRepo;
+use App\Domain\Services\Util\ExceptionObserver\ListException;
+use App\Domain\Services\Util\ExceptionObserver\Observer;
 
-class FindUserByDni
+class FindUserByDni implements Observer
 {
     private $userRepository;
+    private $stateException;
 
     /**
      * FindUserByDni constructor.
@@ -23,21 +26,30 @@ class FindUserByDni
     public function __construct(UserRepo $userRepository)
     {
         $this->userRepository = $userRepository;
+        $this->stateException = false;
     }
 
-    /**
-     * @param string $dni
-     * @return User|null
-     * @throws UserNotFound
-     */
+
     public function __invoke(string $dni): User
     {
         $user = $this->userRepository->findUserByDni($dni);
 
         if (null === $user) {
-            throw new UserNotFound();
+            $this->stateException = true;
+            ListException::instance()->notify();
+
         }
 
         return $user;
+    }
+
+    /**
+     * @throws UserNotFound
+     */
+    public function update()
+    {
+        if($this->stateException) {
+            throw new UserNotFound();
+        }
     }
 }

@@ -8,6 +8,7 @@
 
 namespace App\Domain\Model\Entity\User;
 
+use App\Domain\Model\HttpResponses\HttpResponses;
 use Throwable;
 
 class UserAlreadyExist extends \Exception
@@ -15,7 +16,7 @@ class UserAlreadyExist extends \Exception
     public function __construct()
     {
         $message = "User Already Exist";
-        $code = 400;
+        $code = HttpResponses::CONFLICT_SEARCH;
          parent::__construct($message, $code);
     }
 }

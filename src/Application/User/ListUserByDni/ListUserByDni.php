@@ -10,7 +10,9 @@ namespace App\Application\User\ListUserByDni;
 
 
 
+use App\Domain\Model\HttpResponses\HttpResponses;
 use App\Domain\Services\User\FindUserByDni;
+use App\Domain\Services\Util\ExceptionObserver\ListException;
 
 class ListUserByDni
 {
@@ -25,18 +27,23 @@ class ListUserByDni
     ) {
         $this->dataTransform = $dataTransform;
         $this->findUserByDni = $findUserByDni;
+        ListException::instance()->restartExceptions();
+        ListException::instance()->attach($findUserByDni);
     }
 
 
-    /**
-     * @param ListUserByDniCommand $listUserByDniCommand
-     * @return array
-     * @throws \App\Domain\Model\Entity\User\UserNotFound
-     */
+
     public function handle(ListUserByDniCommand $listUserByDniCommand)
     {
         $list = $this->findUserByDni->__invoke($listUserByDniCommand->getDni());
 
-        return $this->dataTransform->transform($list);
+        if (ListException::instance()->checkForException()) {
+            return ListException::instance()->firstException();
+        }
+
+        return [
+            "data" => $this->dataTransform->transform($list),
+            "code" => HttpResponses::OK
+            ];
     }
 }

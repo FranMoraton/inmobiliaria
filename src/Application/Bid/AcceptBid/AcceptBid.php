@@ -9,10 +9,12 @@
 namespace App\Application\Bid\AcceptBid;
 
 use App\Domain\Model\Entity\Bid\BidRepo;
+use App\Domain\Model\HttpResponses\HttpResponses;
 use App\Domain\Services\Bid\FindBidById;
 use App\Domain\Services\House\FindHouseById;
 use App\Domain\Services\User\CheckUsersAreEquals;
 use App\Domain\Services\User\FindUserByDni;
+use App\Domain\Services\Util\ExceptionObserver\ListException;
 
 class AcceptBid
 {
@@ -38,17 +40,15 @@ class AcceptBid
         $this->checkUserAreEquals = $checkUserAreEquals;
         $this->dataTransform = $dataTransform;
         $this->findHouseById = $findHouseById;
+        ListException::instance()->restartExceptions();
+        ListException::instance()->attach($findHouseById);
+        ListException::instance()->attach($checkUserAreEquals);
+        ListException::instance()->attach($findBidById);
+        ListException::instance()->attach($findUserByDni);
     }
 
 
-    /**
-     * @param AcceptBidCommand $acceptBidCommand
-     * @return array
-     * @throws \App\Domain\Model\Entity\Bid\BidDoNotExist
-     * @throws \App\Domain\Model\Entity\House\HouseDoNotExist
-     * @throws \App\Domain\Model\Entity\User\UserNotFound
-     * @throws \App\Domain\Model\Entity\User\UsersDoNotMatches
-     */
+
     public function handle(AcceptBidCommand $acceptBidCommand)
     {
         $userRequesting = $this->findUserByDni->__invoke($acceptBidCommand->getDniUser());
@@ -59,11 +59,18 @@ class AcceptBid
 
         $this->checkUserAreEquals->__invoke($userRequesting, $house->getHouseOwner());
 
+        if (ListException::instance()->checkForException()) {
+            return ListException::instance()->firstException();
+        }
+
         $bid->setAccepted(true);
         $bid->setRejected(false);
 
         $this->bidRepository->persistAndFlush($bid);
 
-        return $this->dataTransform->transform($bid);
+        return [
+            "data" => $this->dataTransform->transform($bid),
+            "code" => HttpResponses::OK
+        ];
     }
 }

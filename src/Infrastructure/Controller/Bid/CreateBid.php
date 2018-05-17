@@ -8,8 +8,11 @@
 
 namespace App\Infrastructure\Controller\Bid;
 
-
 class CreateBid
 {
 
+    public function __construct()
+    {
+        // return new JsonResponse($bid["data"], $bid["code"]);
+    }
 }

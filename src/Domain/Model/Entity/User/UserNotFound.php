@@ -8,13 +8,14 @@
 
 namespace App\Domain\Model\Entity\User;
 
+use App\Domain\Model\HttpResponses\HttpResponses;
 use Throwable;
 
 class UserNotFound extends \Exception
 {
     public function __construct()
     {
-        $code = 404;
+        $code = HttpResponses::NOT_FOUND;
         $message = "user not found";
         parent::__construct($message, $code);
     }

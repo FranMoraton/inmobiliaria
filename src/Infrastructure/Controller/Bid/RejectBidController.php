@@ -30,10 +30,6 @@ class RejectBidController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws \App\Domain\Model\Entity\Bid\BidDoNotExist
-     * @throws \App\Domain\Model\Entity\House\HouseDoNotExist
-     * @throws \App\Domain\Model\Entity\User\UserNotFound
-     * @throws \App\Domain\Model\Entity\User\UsersDoNotMatches
      * @throws \Assert\AssertionFailedException
      */
     public function __invoke(Request $request)
@@ -43,6 +39,6 @@ class RejectBidController
         $houseId = $request->request->get('houseId');
 
         $bid = $this->handler->handle(new RejectBidCommand($dniUser, $bidId, $houseId));
-        return new JsonResponse($bid);
+        return new JsonResponse($bid["data"], $bid["code"]);
     }
 }

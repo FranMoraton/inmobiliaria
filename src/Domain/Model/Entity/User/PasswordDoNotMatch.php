@@ -8,6 +8,7 @@
 
 namespace App\Domain\Model\Entity\User;
 
+use App\Domain\Model\HttpResponses\HttpResponses;
 use Throwable;
 
 class PasswordDoNotMatch extends \Exception
@@ -15,7 +16,7 @@ class PasswordDoNotMatch extends \Exception
     public function __construct()
     {
         $message = "password do not match";
-        $code = 400;
+        $code = HttpResponses::UNAUTHORIZED;
         parent::__construct($message, $code);
     }
 }

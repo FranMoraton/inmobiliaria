@@ -11,18 +11,33 @@ namespace App\Domain\Services\User;
 
 use App\Domain\Model\Entity\User\User;
 use App\Domain\Model\Entity\User\UsersDoNotMatches;
+use App\Domain\Services\Util\ExceptionObserver\ListException;
+use App\Domain\Services\Util\ExceptionObserver\Observer;
 
-class CheckUsersAreEquals
+class CheckUsersAreEquals implements Observer
 {
-    /**
-     * @param User $user
-     * @param User $user2
-     * @throws UsersDoNotMatches
-     */
+    private $stateException;
+    public function __construct()
+    {
+        $this->stateException = false;
+    }
+
     public function __invoke(User $user, User $user2)
     {
         if ($user !== $user) {
+            $this->stateException = true;
+            ListException::instance()->notify();
+        }
+    }
+
+    /**
+     * @throws UsersDoNotMatches
+     */
+    public function update()
+    {
+        if($this->stateException){
             throw new UsersDoNotMatches();
         }
+
     }
 }

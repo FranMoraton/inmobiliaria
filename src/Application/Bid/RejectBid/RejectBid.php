@@ -9,10 +9,12 @@
 namespace App\Application\Bid\RejectBid;
 
 use App\Domain\Model\Entity\Bid\BidRepo;
+use App\Domain\Model\HttpResponses\HttpResponses;
 use App\Domain\Services\Bid\FindBidById;
 use App\Domain\Services\House\FindHouseById;
 use App\Domain\Services\User\CheckUsersAreEquals;
 use App\Domain\Services\User\FindUserByDni;
+use App\Domain\Services\Util\ExceptionObserver\ListException;
 
 class RejectBid
 {
@@ -46,16 +48,14 @@ class RejectBid
         $this->checkUserAreEquals = $checkUserAreEquals;
         $this->dataTransform = $dataTransform;
         $this->findHouseById = $findHouseById;
+        ListException::instance()->restartExceptions();
+        ListException::instance()->attach($findHouseById);
+        ListException::instance()->attach($checkUserAreEquals);
+        ListException::instance()->attach($findBidById);
+        ListException::instance()->attach($findUserByDni);
     }
 
-    /**
-     * @param RejectBidCommand $rejectBidCommand
-     * @return array
-     * @throws \App\Domain\Model\Entity\Bid\BidDoNotExist
-     * @throws \App\Domain\Model\Entity\House\HouseDoNotExist
-     * @throws \App\Domain\Model\Entity\User\UserNotFound
-     * @throws \App\Domain\Model\Entity\User\UsersDoNotMatches
-     */
+
     public function handle(RejectBidCommand $rejectBidCommand)
     {
 
@@ -67,11 +67,18 @@ class RejectBid
 
         $this->checkUserAreEquals->__invoke($userRequesting, $house->getHouseOwner());
 
+        if (ListException::instance()->checkForException()) {
+            return ListException::instance()->firstException();
+        }
+
         $bid->setAccepted(false);
         $bid->setRejected(true);
 
         $this->bidRepository->persistAndFlush($bid);
 
-        return $this->dataTransform->transform($bid);
+        return [
+            "data" => $this->dataTransform->transform($bid),
+            "code" => HttpResponses::OK
+        ];
     }
 }

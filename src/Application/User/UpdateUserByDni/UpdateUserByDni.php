@@ -10,8 +10,10 @@ namespace App\Application\User\UpdateUserByDni;
 
 
 use App\Domain\Model\Entity\User\UserRepo;
+use App\Domain\Model\HttpResponses\HttpResponses;
 use App\Domain\Services\User\EncodePassword;
 use App\Domain\Services\User\FindUserByDni;
+use App\Domain\Services\Util\ExceptionObserver\ListException;
 
 class UpdateUserByDni
 {
@@ -38,20 +40,21 @@ class UpdateUserByDni
         $this->findUserByDni = $findUserByDni;
         $this->encodePassword = $encodePassword;
         $this->userRepository = $userRepository;
+        ListException::instance()->restartExceptions();
+        ListException::instance()->attach($findUserByDni);
     }
 
 
-    /**
-     * @param UpdateUserByDniCommand $updateUserByDniCommand
-     * @return array
-     * @throws \App\Domain\Model\Entity\User\UserNotFound
-     */
+
     public function handle(UpdateUserByDniCommand $updateUserByDniCommand)
     {
         $user = $this->findUserByDni->__invoke($updateUserByDniCommand->getDni());
 
         $password = $this->encodePassword->execute($updateUserByDniCommand->getPassword());
 
+        if (ListException::instance()->checkForException()) {
+            return ListException::instance()->firstException();
+        }
 
             $user->setPassword($password);
 
@@ -63,6 +66,9 @@ class UpdateUserByDni
 
         $this->userRepository->persistAndFlush($user);
 
-        return $this->dataTransform->transform($user);
+        return [
+            "data" => $this->dataTransform->transform($user),
+            "code" => HttpResponses::OK
+            ];
     }
 }

@@ -8,7 +8,6 @@
 
 namespace App\Infrastructure\Controller\User;
 
-
 use App\Application\User\UpdateUserByDni\UpdateUserByDni;
 use App\Application\User\UpdateUserByDni\UpdateUserByDniCommand;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,7 +29,6 @@ class UpdateUserController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws \App\Domain\Model\Entity\User\UserNotFound
      * @throws \Assert\AssertionFailedException
      */
     public function __invoke(Request $request)
@@ -42,6 +40,6 @@ class UpdateUserController
 
         $userModified = $this->handler->handle(new UpdateUserByDniCommand($dni, $password, $birthDate, $passwordVerify));
 
-        return new JsonResponse($userModified);
+        return new JsonResponse($userModified["data"], $userModified["code"]);
     }
 }

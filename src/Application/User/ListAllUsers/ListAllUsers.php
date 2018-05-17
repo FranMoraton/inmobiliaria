@@ -9,6 +9,7 @@
 namespace App\Application\User\ListAllUsers;
 
 use App\Domain\Model\Entity\User\UserRepo;
+use App\Domain\Model\HttpResponses\HttpResponses;
 
 ;
 
@@ -33,6 +34,9 @@ class ListAllUsers
         $list = $this->userRepository->findAllUsers();
 
 
-        return $this->dataTransform->transform($list);
+        return [
+            "data" => $this->dataTransform->transform($list),
+            "code" => HttpResponses::OK
+            ];
     }
 }

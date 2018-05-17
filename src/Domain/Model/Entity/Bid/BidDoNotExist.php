@@ -9,6 +9,7 @@
 namespace App\Domain\Model\Entity\Bid;
 
 
+use App\Domain\Model\HttpResponses\HttpResponses;
 use Throwable;
 
 class BidDoNotExist extends \Exception
@@ -16,7 +17,7 @@ class BidDoNotExist extends \Exception
     public function __construct()
     {
         $message = "La puja no existe";
-        $code = 404;
+        $code = HttpResponses::NOT_FOUND;
         parent::__construct($message, $code);
     }
 }

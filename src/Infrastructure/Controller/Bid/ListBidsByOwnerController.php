@@ -8,8 +8,10 @@
 
 namespace App\Infrastructure\Controller\Bid;
 
-
 class ListBidsByOwnerController
 {
-
+    public function __construct()
+    {
+        //return new JsonResponse($list["data"], $list["code"]);
+    }
 }

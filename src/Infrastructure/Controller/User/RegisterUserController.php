@@ -25,7 +25,6 @@ class RegisterUserController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws \App\Domain\Model\Entity\User\UserAlreadyExist
      * @throws \Assert\AssertionFailedException
      */
     public function __invoke(Request $request)
@@ -36,6 +35,6 @@ class RegisterUserController
 
         $list = $this->handler->handle(new RegisterUserCommand($dni, $password, $birthDate));
 
-        return new JsonResponse($list);
+        return new JsonResponse($list["data"], $list["code"]);
     }
 }

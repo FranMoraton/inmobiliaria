@@ -29,8 +29,6 @@ class LogInUserController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws \App\Domain\Model\Entity\User\PasswordDoNotMatch
-     * @throws \App\Domain\Model\Entity\User\UserNotFound
      * @throws \Assert\AssertionFailedException
      */
     public function __invoke(Request $request)
@@ -40,6 +38,6 @@ class LogInUserController
 
         $list = $this->handler->handle(new LogInUserCommand($dni, $password));
 
-        return new JsonResponse($list);
+        return new JsonResponse($list["data"], $list["code"]);
     }
 }

@@ -8,6 +8,7 @@
 
 namespace App\Domain\Model\Entity\House;
 
+use App\Domain\Model\HttpResponses\HttpResponses;
 use Throwable;
 
 class HouseDoNotExist extends \Exception
@@ -15,7 +16,7 @@ class HouseDoNotExist extends \Exception
     public function __construct()
     {
         $message = "House Not Found";
-        $code = 404;
+        $code = HttpResponses::NOT_FOUND;
         parent::__construct($message, $code);
     }
 }

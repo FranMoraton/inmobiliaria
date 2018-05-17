@@ -9,17 +9,32 @@
 namespace App\Domain\Services\User;
 
 use App\Domain\Model\Entity\User\PasswordDoNotMatch;
+use App\Domain\Services\Util\ExceptionObserver\ListException;
+use App\Domain\Services\Util\ExceptionObserver\Observer;
 
-class CheckPasswordForLogIn
+class CheckPasswordForLogIn implements Observer
 {
-    /**
-     * @param string $findUserPassword
-     * @param string $passwordRequest
-     * @throws PasswordDoNotMatch
-     */
+    private $stateException;
+    public function __construct()
+    {
+        $this->stateException = false;
+    }
+
+
     public function __invoke(string $findUserPassword, string $passwordRequest)
     {
         if (false === password_verify($passwordRequest, $findUserPassword)) {
+            $this->stateException = true;
+            ListException::instance()->notify();
+        }
+    }
+
+    /**
+     * @throws PasswordDoNotMatch
+     */
+    public function update()
+    {
+        if($this->stateException) {
             throw new PasswordDoNotMatch();
         }
     }

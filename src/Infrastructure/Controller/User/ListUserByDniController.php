@@ -29,12 +29,11 @@ class ListUserByDniController
     /**
      * @param string $dni
      * @return JsonResponse
-     * @throws \App\Domain\Model\Entity\User\UserNotFound
      * @throws \Assert\AssertionFailedException
      */
     public function __invoke(string $dni)
     {
         $list = $this->handler->handle(new ListUserByDniCommand($dni));
-        return new JsonResponse($list);
+        return new JsonResponse($list["data"], $list["code"]);
     }
 }
