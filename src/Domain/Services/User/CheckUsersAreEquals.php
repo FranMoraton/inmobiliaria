@@ -35,9 +35,8 @@ class CheckUsersAreEquals implements Observer
      */
     public function update()
     {
-        if($this->stateException){
+        if ($this->stateException) {
             throw new UsersDoNotMatches();
         }
-
     }
 }

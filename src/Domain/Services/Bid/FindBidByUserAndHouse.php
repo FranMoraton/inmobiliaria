@@ -2,26 +2,28 @@
 /**
  * Created by PhpStorm.
  * User: Fran Moraton
- * Date: 16/05/2018
- * Time: 19:28
+ * Date: 18/05/2018
+ * Time: 9:26
  */
 
 namespace App\Domain\Services\Bid;
 
-
 use App\Domain\Model\Entity\Bid\Bid;
 use App\Domain\Model\Entity\Bid\BidDoNotExist;
 use App\Domain\Model\Entity\Bid\BidRepo;
+use App\Domain\Model\Entity\House\House;
+use App\Domain\Model\Entity\User\User;
 use App\Domain\Services\Util\ExceptionObserver\ListException;
 use App\Domain\Services\Util\ExceptionObserver\Observer;
 
-class FindBidById implements Observer
+class FindBidByUserAndHouse implements Observer
 {
     private $bidRepository;
     private $stateException;
+
     /**
-     * FindBidById constructor.
-     * @param $bidRepository
+     * CheckIfBidAlreadyExist constructor.
+     * @param BidRepo $bidRepository
      */
     public function __construct(BidRepo $bidRepository)
     {
@@ -30,9 +32,9 @@ class FindBidById implements Observer
     }
 
 
-    public function __invoke(int $id): ?Bid
+    public function __invoke(User $user, House $house): ?Bid
     {
-        $bid = $this->bidRepository->findBidById($id);
+        $bid = $this->bidRepository->findByUserAndHouse($user, $house);
 
         if (null === $bid) {
             $this->stateException = true;
@@ -52,3 +54,4 @@ class FindBidById implements Observer
         }
     }
 }
+

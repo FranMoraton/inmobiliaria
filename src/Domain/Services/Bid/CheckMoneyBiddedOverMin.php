@@ -2,40 +2,40 @@
 /**
  * Created by PhpStorm.
  * User: Fran Moraton
- * Date: 15/05/2018
- * Time: 19:58
+ * Date: 18/05/2018
+ * Time: 9:52
  */
 
-namespace App\Domain\Services\User;
+namespace App\Domain\Services\Bid;
 
-use App\Domain\Model\Entity\User\PasswordDoNotMatch;
+use App\Domain\Model\Entity\Bid\BidUnderTheMin;
 use App\Domain\Services\Util\ExceptionObserver\ListException;
 use App\Domain\Services\Util\ExceptionObserver\Observer;
 
-class CheckPasswordForLogIn implements Observer
+class CheckMoneyBiddedOverMin implements Observer
 {
+
     private $stateException;
     public function __construct()
     {
         $this->stateException = false;
     }
 
-
-    public function __invoke(string $findUserPassword, string $passwordRequest)
+    public function __invoke(int $money, int $housePrize)
     {
-        if (false === password_verify($passwordRequest, $findUserPassword)) {
+        if ($money < $housePrize) {
             $this->stateException = true;
             ListException::instance()->notify();
         }
     }
 
     /**
-     * @throws PasswordDoNotMatch
+     * @throws BidUnderTheMin
      */
     public function update()
     {
         if ($this->stateException) {
-            throw new PasswordDoNotMatch();
+            throw new BidUnderTheMin();
         }
     }
 }

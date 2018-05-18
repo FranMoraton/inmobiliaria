@@ -8,7 +8,6 @@
 
 namespace App\Domain\Services\User;
 
-
 class EncodePassword
 {
     public function execute(string $password): string

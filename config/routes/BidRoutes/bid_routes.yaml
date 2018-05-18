@@ -23,12 +23,13 @@ ListBidById:
     controller: App\Infrastructure\Controller\Bid\ListByIdController:__invoke
     methods: [GET]
 
-#CreateBidController:
-#    path: /{dni}
-#    controller: App\Infrastructure\Controller\User\ListUserByDniController:__invoke
-#    methods: [GET]
-#
-#ListHouseBiddedByUser:
-#    path: /{dni}
-#    controller: App\Infrastructure\Controller\User\ListUserByDniController:__invoke
-#    methods: [GET]
+CreateBidController:
+    path: /{dni}/{house}/new/{money}
+    controller: App\Infrastructure\Controller\Bid\CreateBidController:__invoke
+    methods: [GET]
+
+ModifyBidController:
+    path: /{dni}/{house}/modify/{money}
+    controller: App\Infrastructure\Controller\Bid\ModifyBidController:__invoke
+    methods: [GET]
+

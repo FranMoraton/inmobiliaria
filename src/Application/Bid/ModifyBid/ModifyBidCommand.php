@@ -2,15 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: Fran Moraton
- * Date: 17/05/2018
- * Time: 22:45
+ * Date: 18/05/2018
+ * Time: 10:18
  */
 
-namespace App\Application\Bid\CreateBid;
+namespace App\Application\Bid\ModifyBid;
 
 use Assert\Assertion;
 
-class CreateBidCommand
+class ModifyBidCommand
 {
 
     private $dni;

@@ -8,8 +8,7 @@
 
 namespace App\Domain\Services\Util\ExceptionObserver;
 
-
 interface Observer
 {
- public function update();
+    public function update();
 }

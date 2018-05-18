@@ -2,26 +2,27 @@
 /**
  * Created by PhpStorm.
  * User: Fran Moraton
- * Date: 16/05/2018
- * Time: 19:28
+ * Date: 18/05/2018
+ * Time: 8:18
  */
 
 namespace App\Domain\Services\Bid;
 
-
-use App\Domain\Model\Entity\Bid\Bid;
-use App\Domain\Model\Entity\Bid\BidDoNotExist;
+use App\Domain\Model\Entity\Bid\BidAlreadyExist;
 use App\Domain\Model\Entity\Bid\BidRepo;
+use App\Domain\Model\Entity\House\House;
+use App\Domain\Model\Entity\User\User;
 use App\Domain\Services\Util\ExceptionObserver\ListException;
 use App\Domain\Services\Util\ExceptionObserver\Observer;
 
-class FindBidById implements Observer
+class CheckIfBidAlreadyExist implements Observer
 {
     private $bidRepository;
     private $stateException;
+
     /**
-     * FindBidById constructor.
-     * @param $bidRepository
+     * CheckIfBidAlreadyExist constructor.
+     * @param BidRepo $bidRepository
      */
     public function __construct(BidRepo $bidRepository)
     {
@@ -30,25 +31,23 @@ class FindBidById implements Observer
     }
 
 
-    public function __invoke(int $id): ?Bid
+    public function __invoke(User $user, House $house)
     {
-        $bid = $this->bidRepository->findBidById($id);
+        $bid = $this->bidRepository->findByUserAndHouse($user, $house);
 
-        if (null === $bid) {
+        if (null !== $bid) {
             $this->stateException = true;
             ListException::instance()->notify();
         }
-
-        return $bid;
     }
 
     /**
-     * @throws BidDoNotExist
+     * @throws BidAlreadyExist
      */
     public function update()
     {
         if ($this->stateException) {
-            throw new BidDoNotExist();
+            throw new BidAlreadyExist();
         }
     }
 }

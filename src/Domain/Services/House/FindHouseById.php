@@ -30,7 +30,7 @@ class FindHouseById implements Observer
     }
 
 
-    public function __invoke(int $id): House
+    public function __invoke(int $id): ?House
     {
         $house = $this->houseRepository->findHouseById($id);
 
@@ -48,7 +48,7 @@ class FindHouseById implements Observer
      */
     public function update()
     {
-        if($this->stateException){
+        if ($this->stateException) {
             throw new HouseDoNotExist();
         }
     }

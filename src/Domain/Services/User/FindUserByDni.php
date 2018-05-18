@@ -30,7 +30,7 @@ class FindUserByDni implements Observer
     }
 
 
-    public function __invoke(string $dni): User
+    public function __invoke(string $dni): ?User
     {
         $user = $this->userRepository->findUserByDni($dni);
 
@@ -48,7 +48,7 @@ class FindUserByDni implements Observer
      */
     public function update()
     {
-        if($this->stateException) {
+        if ($this->stateException) {
             throw new UserNotFound();
         }
     }

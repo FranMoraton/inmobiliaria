@@ -43,7 +43,7 @@ class CheckIfUserExist implements Observer
      */
     public function update()
     {
-        if($this->stateException){
+        if ($this->stateException) {
             throw new UserAlreadyExist();
         }
     }

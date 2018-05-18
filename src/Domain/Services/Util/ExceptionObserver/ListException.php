@@ -8,7 +8,6 @@
 
 namespace App\Domain\Services\Util\ExceptionObserver;
 
-
 class ListException implements Observable
 {
     private static $instance;
@@ -35,7 +34,8 @@ class ListException implements Observable
         $this->observers = [];
         $this->exceptions = [];
     }
-    public function checkForException(){
+
+    public function checkForException() {
         return 0 !== count($this->exceptions);
     }
 

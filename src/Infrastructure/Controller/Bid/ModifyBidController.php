@@ -2,21 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: Fran Moraton
- * Date: 16/05/2018
- * Time: 21:05
+ * Date: 18/05/2018
+ * Time: 11:37
  */
 
 namespace App\Infrastructure\Controller\Bid;
 
-use App\Application\Bid\CreateBid\CreateBid;
-use App\Application\Bid\CreateBid\CreateBidCommand;
+use App\Application\Bid\ModifyBid\ModifyBid;
+use App\Application\Bid\ModifyBid\ModifyBidCommand;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class CreateBidController
+class ModifyBidController
 {
+
     private $handler;
 
-    public function __construct(CreateBid $handler)
+    public function __construct(ModifyBid $handler)
     {
         $this->handler = $handler;
     }
@@ -30,7 +31,7 @@ class CreateBidController
      */
     public function __invoke($dni, $house, $money)
     {
-        $bid = $this->handler->handle(new CreateBidCommand($dni, $house, $money));
+        $bid = $this->handler->handle(new ModifyBidCommand($dni, $house, $money));
 
         return new JsonResponse($bid["data"], $bid["code"]);
     }

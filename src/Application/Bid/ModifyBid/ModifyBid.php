@@ -2,86 +2,78 @@
 /**
  * Created by PhpStorm.
  * User: Fran Moraton
- * Date: 17/05/2018
- * Time: 22:45
+ * Date: 18/05/2018
+ * Time: 10:17
  */
 
-namespace App\Application\Bid\CreateBid;
+namespace App\Application\Bid\ModifyBid;
 
-use App\Domain\Model\Entity\Bid\Bid;
 use App\Domain\Model\Entity\Bid\BidRepo;
 use App\Domain\Model\HttpResponses\HttpResponses;
-use App\Domain\Services\Bid\CheckIfBidAlreadyExist;
 use App\Domain\Services\Bid\CheckMoneyBiddedOverMin;
+use App\Domain\Services\Bid\FindBidByUserAndHouse;
 use App\Domain\Services\House\FindHouseById;
 use App\Domain\Services\User\FindUserByDni;
 use App\Domain\Services\Util\ExceptionObserver\ListException;
 
-class CreateBid
+class ModifyBid
 {
+
     private $findUserByDni;
     private $findHouseById;
-    private $checkIfBidAlreadyExist;
+    private $findBidByUserAndHouse;
     private $checkMoneyBiddedOverMin;
     private $dataTransform;
     private $bidRepository;
 
-    /**
-     * CreateBid constructor.
-     * @param FindUserByDni $findUserByDni
-     * @param FindHouseById $findHouseById
-     * @param CheckIfBidAlreadyExist $checkIfBidAlreadyExist
-     * @param CheckMoneyBiddedOverMin $checkMoneyBiddedOverMin
-     * @param CreateBidTransformInterface $dataTransform
-     * @param BidRepo $bidRepository
-     */
+
     public function __construct(
         FindUserByDni $findUserByDni,
         FindHouseById $findHouseById,
-        CheckIfBidAlreadyExist $checkIfBidAlreadyExist,
+        FindBidByUserAndHouse $findBidByUserAndHouse,
         CheckMoneyBiddedOverMin $checkMoneyBiddedOverMin,
-        CreateBidTransformInterface $dataTransform,
+        ModifyBidTransformInterface $dataTransform,
         BidRepo $bidRepository
     ) {
         $this->findUserByDni = $findUserByDni;
         $this->findHouseById = $findHouseById;
-        $this->checkIfBidAlreadyExist = $checkIfBidAlreadyExist;
+        $this->findBidByUserAndHouse = $findBidByUserAndHouse;
         $this->checkMoneyBiddedOverMin = $checkMoneyBiddedOverMin;
         $this->dataTransform = $dataTransform;
         $this->bidRepository = $bidRepository;
         ListException::instance()->restartExceptions();
         ListException::instance()->attach($findUserByDni);
         ListException::instance()->attach($findHouseById);
-        ListException::instance()->attach($checkIfBidAlreadyExist);
+        ListException::instance()->attach($findBidByUserAndHouse);
         ListException::instance()->attach($checkMoneyBiddedOverMin);
     }
 
 
-    public function handle(CreateBidCommand $createBidCommand)
+    public function handle(ModifyBidCommand $modifyBidCommand)
     {
-        $user  = $this->findUserByDni->__invoke($createBidCommand->getDni());
-        $house = $this->findHouseById->__invoke($createBidCommand->getHouseId());
+        $user  = $this->findUserByDni->__invoke($modifyBidCommand->getDni());
+        $house = $this->findHouseById->__invoke($modifyBidCommand->getHouseId());
 
         if (ListException::instance()->checkForException()) {
             return ListException::instance()->firstException();
         }
 
-        $this->checkMoneyBiddedOverMin->__invoke($createBidCommand->getMoney(), $house->getSellingPrize());
+        $this->checkMoneyBiddedOverMin->__invoke($modifyBidCommand->getMoney(), $house->getSellingPrize());
 
-        $this->checkIfBidAlreadyExist->__invoke($user, $house);
+        $bid = $this->findBidByUserAndHouse->__invoke($user, $house);
 
         if (ListException::instance()->checkForException()) {
             return ListException::instance()->firstException();
         }
 
 
-        $newBid = Bid::createdByApi($house, $user, $createBidCommand->getMoney());
-        ;
-        $this->bidRepository->persistAndFlush($newBid);
+        $bid->setMoneyBidded($modifyBidCommand->getMoney());
+
+        $this->bidRepository->persistAndFlush($bid);
 
         return[
-          "data" => $this->dataTransform->transform($newBid),
-          "code" => HttpResponses::OK
+            "data" => $this->dataTransform->transform($bid),
+            "code" => HttpResponses::OK
         ];
     }
 }
