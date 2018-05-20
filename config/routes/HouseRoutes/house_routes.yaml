@@ -19,8 +19,12 @@ ListHouseBiddedByUser:
     controller: App\Infrastructure\Controller\House\ListHouseBiddedByUserController:__invoke
     methods: [GET]
 
-#RegisterUser:
-#    path: /register
-#    controller: App\Infrastructure\Controller\User\RegisterUserController:__invoke
-#    methods: [POST]
+ModifyHouseWithOwnerAndId:
+    path: /modify
+    controller: App\Infrastructure\Controller\House\ModifyHouseWithOwnerAndIdController:__invoke
+    methods: [POST]
 
+#CreateHouse:
+#    path: /create
+#    controller: App\Infrastructure\Controller\House\ModifyHouseWithOwnerAndIdController:__invoke
+#    methods: [POST]

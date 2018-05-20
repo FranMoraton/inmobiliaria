@@ -8,7 +8,6 @@
 
 namespace App\Domain\Services\User;
 
-
 use App\Domain\Model\Entity\User\User;
 use App\Domain\Model\Entity\User\UsersDoNotMatches;
 use App\Domain\Services\Util\ExceptionObserver\ListException;
