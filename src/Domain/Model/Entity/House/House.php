@@ -36,7 +36,7 @@ class House
      * @ORM\ManyToOne(targetEntity="App\Domain\Model\Entity\House\Coordinates\Coordinates", inversedBy="houses")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Coordinates;
+    private $coordinates;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -79,10 +79,39 @@ class House
      */
     private $bids;
 
-    public function __construct()
-    {
+    public function __construct(
+        User $houseOwner,
+        int $sellingPrize,
+        string $country,
+        string $city,
+        string $adress
+    ) {
+        $this->adress = $adress;
+        $this->country = $country;
+        $this->city = $city;
+        $this->coordinates = 1;
+        $this->sellingPrize = $sellingPrize;
+        $this->houseOwner = $houseOwner;
+        $this->houseDisabled = 0;
         $this->photos = new ArrayCollection();
         $this->bids = new ArrayCollection();
+    }
+
+    public static function createFromApi(
+        $houseOwner,
+        $sellingPrize,
+        $country,
+        $city,
+        $adress
+    ): self {
+
+        return new self(
+            $houseOwner,
+            $sellingPrize,
+            $country,
+            $city,
+            $adress
+        );
     }
 
     public function getId()
@@ -92,12 +121,12 @@ class House
 
     public function getCoordinates(): ?Coordinates
     {
-        return $this->Coordinates;
+        return $this->coordinates;
     }
 
-    public function setCoordinates(?Coordinates $Coordinates): self
+    public function setCoordinates(?Coordinates $coordinates): self
     {
-        $this->Coordinates = $Coordinates;
+        $this->coordinates = $coordinates;
 
         return $this;
     }

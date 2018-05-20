@@ -8,7 +8,6 @@
 
 namespace App\Domain\Services\House;
 
-
 use App\Domain\Model\Entity\House\House;
 use App\Domain\Model\Entity\House\HouseDoNotExist;
 use App\Domain\Model\Entity\House\HouseRepo;

@@ -10,31 +10,33 @@ namespace App\Application\Bid\ListBidsByOwner;
 
 use App\Domain\Model\Entity\Bid\BidRepo;
 use App\Domain\Model\HttpResponses\HttpResponses;
+use App\Domain\Services\Bid\FindIfUserHasBids;
 use App\Domain\Services\User\FindUserByDni;
 use App\Domain\Services\Util\ExceptionObserver\ListException;
 
 class ListBidsByOwner
 {
     private $findUserByDni;
-    private $bidRepository;
+    private $findIfUserHasBids;
     private $dataTransform;
 
     /**
      * ListBidsByOwner constructor.
      * @param FindUserByDni $findUserByDni
-     * @param BidRepo $bidRepository
+     * @param FindIfUserHasBids $findIfUserHasBids
      * @param ListBidsByOwnerTransformInterface $dataTransform
      */
     public function __construct(
         FindUserByDni $findUserByDni,
-        BidRepo $bidRepository,
+        FindIfUserHasBids $findIfUserHasBids,
         ListBidsByOwnerTransformInterface $dataTransform
     ) {
         $this->findUserByDni = $findUserByDni;
-        $this->bidRepository = $bidRepository;
+        $this->findIfUserHasBids = $findIfUserHasBids;
         $this->dataTransform = $dataTransform;
         ListException::instance()->restartExceptions();
         ListException::instance()->attach($findUserByDni);
+        ListException::instance()->attach($findIfUserHasBids);
     }
 
     public function handle(ListBidsByOwnerCommand $listBidsByOwnerCommand)
@@ -44,8 +46,11 @@ class ListBidsByOwner
         if (ListException::instance()->checkForException()) {
             return ListException::instance()->firstException();
         }
-        $list = $this->bidRepository->findBidsByOwner($user);
+        $list = $this->findIfUserHasBids->__invoke($user);
 
+        if (ListException::instance()->checkForException()) {
+            return ListException::instance()->firstException();
+        }
         $transformed = $this->dataTransform->transform($list);
 
         return  [

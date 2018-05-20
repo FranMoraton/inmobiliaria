@@ -11,6 +11,7 @@ namespace App\Infrastructure\Repository\House;
 use App\Domain\Model\Entity\House\House;
 use App\Domain\Model\Entity\House\HouseRepo;
 use App\Domain\Model\Entity\User\User;
+use App\Domain\Services\House\Specification\Specification;
 use Doctrine\ORM\EntityRepository;
 
 class HouseRepository extends EntityRepository implements HouseRepo
@@ -27,13 +28,13 @@ class HouseRepository extends EntityRepository implements HouseRepo
         return $this->findAll();
     }
 
-    public function findHouseById(int $id): ?House
+    public function findHouseById($id): ?House
     {
         return $this->findOneBy([ "id" => $id ]);
     }
 
     public function findHouseByOwner(User $user): array
     {
-        return $this->findBy([ "user" => $user ]);
+        return $this->findBy([ "houseOwner" => $user ]);
     }
 }

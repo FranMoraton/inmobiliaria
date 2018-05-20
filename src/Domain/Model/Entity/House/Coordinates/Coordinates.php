@@ -40,7 +40,7 @@ class Coordinates
     private $longitude;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Domain\Model\Entity\House\House", mappedBy="Coordinates")
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\Entity\House\House", mappedBy="coordinates")
      */
     private $houses;
 

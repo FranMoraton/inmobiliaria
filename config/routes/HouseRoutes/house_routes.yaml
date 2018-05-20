@@ -3,24 +3,24 @@
 #    controller: App\Infrastructure\Controller\User\ListUsersController:__invoke
 #
 
-#ListUserByDni:
-#    path: /{dni}
-#    controller: App\Infrastructure\Controller\User\ListUserByDniController:__invoke
-#    methods: [GET]
-#
+ListHouseById:
+    path: /{id}
+    controller: App\Infrastructure\Controller\House\ListHouseByIdController:__invoke
+    methods: [GET]
 
-#LogInUser:
-#    path: /login
-#    controller: App\Infrastructure\Controller\User\LogInUserController:__invoke
-#    methods: [POST]
-#
+
+ListHousesByOwner:
+    path: /{dni}/houses
+    controller: App\Infrastructure\Controller\House\ListHouseByOwnerController:__invoke
+    methods: [GET]
+
+ListHouseBiddedByUser:
+    path: /{dni}/biddedhouses
+    controller: App\Infrastructure\Controller\House\ListHouseBiddedByUserController:__invoke
+    methods: [GET]
 
 #RegisterUser:
 #    path: /register
 #    controller: App\Infrastructure\Controller\User\RegisterUserController:__invoke
 #    methods: [POST]
 
-#ListHouseBiddedByUser:
-#    path: /{dni}
-#    controller: App\Infrastructure\Controller\User\ListUserByDniController:__invoke
-#    methods: [GET]
