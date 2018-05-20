@@ -24,7 +24,7 @@ ModifyHouseWithOwnerAndId:
     controller: App\Infrastructure\Controller\House\ModifyHouseWithOwnerAndIdController:__invoke
     methods: [POST]
 
-#CreateHouse:
-#    path: /create
-#    controller: App\Infrastructure\Controller\House\ModifyHouseWithOwnerAndIdController:__invoke
-#    methods: [POST]
+CreateHouse:
+    path: /create
+    controller: App\Infrastructure\Controller\House\CreateHouseController:__invoke
+    methods: [POST]

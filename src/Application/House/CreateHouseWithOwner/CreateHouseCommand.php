@@ -8,25 +8,22 @@
 
 namespace App\Application\House\CreateHouseWithOwner;
 
-
 use Assert\Assertion;
 
 class CreateHouseCommand
 {
 
     private $dni;
-    private $houseId;
     private $adress;
     private $sellingPrize;
     private $city;
     private $country;
-    private $disableHouse;
+
 
 
     /**
-     * ModifyHouseCommand constructor.
+     * CreateHouseCommand constructor.
      * @param $dni
-     * @param $houseId
      * @param $adress
      * @param $sellingPrize
      * @param $city
@@ -34,10 +31,9 @@ class CreateHouseCommand
      * @param $disableHouse
      * @throws \Assert\AssertionFailedException
      */
-    public function __construct($dni, $houseId, $adress, $sellingPrize, $city, $country, $disableHouse)
+    public function __construct($dni, $adress, $sellingPrize, $city, $country, $disableHouse)
     {
         Assertion::regex($dni, '^[0-9]{8,8}[A-Za-z]$^');
-        Assertion::numeric($houseId);
         Assertion::string($adress);
         Assertion::maxLength($adress, 100);
         Assertion::string($city);
@@ -45,15 +41,12 @@ class CreateHouseCommand
         Assertion::string($country);
         Assertion::maxLength($country, 20);
         Assertion::numeric($sellingPrize);
-        Assertion::numeric($disableHouse);
-        Assertion::between($disableHouse, 0, 1);
         $this->dni = $dni;
-        $this->houseId = $houseId;
         $this->adress = $adress;
         $this->sellingPrize = $sellingPrize;
         $this->city = $city;
         $this->country = $country;
-        $this->disableHouse = $disableHouse;
+
     }
 
     /**
@@ -62,14 +55,6 @@ class CreateHouseCommand
     public function getDni()
     {
         return $this->dni;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHouseId()
-    {
-        return $this->houseId;
     }
 
     /**
@@ -102,13 +87,5 @@ class CreateHouseCommand
     public function getCountry()
     {
         return $this->country;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDisableHouse()
-    {
-        return $this->disableHouse;
     }
 }

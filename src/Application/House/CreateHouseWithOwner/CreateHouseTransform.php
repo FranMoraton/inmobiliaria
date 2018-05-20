@@ -8,6 +8,8 @@
 
 namespace App\Application\House\CreateHouseWithOwner;
 
+use App\Domain\Model\Entity\House\House;
+
 class CreateHouseTransform implements CreateHouseTransformInterface
 {
     /**

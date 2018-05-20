@@ -8,6 +8,8 @@
 
 namespace App\Application\House\CreateHouseWithOwner;
 
+use App\Domain\Model\Entity\House\House;
+
 interface CreateHouseTransformInterface
 {
     public function transform(House $house): array;

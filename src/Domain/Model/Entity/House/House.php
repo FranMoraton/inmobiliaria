@@ -34,7 +34,7 @@ class House
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Domain\Model\Entity\House\Coordinates\Coordinates", inversedBy="houses")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $coordinates;
 
@@ -89,7 +89,7 @@ class House
         $this->adress = $adress;
         $this->country = $country;
         $this->city = $city;
-        $this->coordinates = 1;
+        $this->coordinates = null;
         $this->sellingPrize = $sellingPrize;
         $this->houseOwner = $houseOwner;
         $this->houseDisabled = 0;
