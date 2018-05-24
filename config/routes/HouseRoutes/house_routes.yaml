@@ -1,13 +1,12 @@
-#ListHouses:
-#    path: /
-#    controller: App\Infrastructure\Controller\User\ListUsersController:__invoke
-#
+FilterHouses:
+    path: /filter
+    controller: App\Infrastructure\Controller\House\FilterHouseController:__invoke
+    methods: [POST]
 
 ListHouseById:
     path: /{id}
     controller: App\Infrastructure\Controller\House\ListHouseByIdController:__invoke
     methods: [GET]
-
 
 ListHousesByOwner:
     path: /{dni}/houses

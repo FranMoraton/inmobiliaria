@@ -38,7 +38,8 @@ class UpdateUserController
         $passwordVerify = $request->request->get("passwordVerify");
         $birthDate = $request->request->get("birthDate");
 
-        $userModified = $this->handler->handle(new UpdateUserByDniCommand($dni, $password, $birthDate, $passwordVerify));
+        $userModified = $this->handler
+            ->handle(new UpdateUserByDniCommand($dni, $password, $birthDate, $passwordVerify));
 
         return new JsonResponse($userModified["data"], $userModified["code"]);
     }

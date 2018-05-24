@@ -30,7 +30,7 @@ class UpdateUserByDniCommand
         Assertion::regex($dni, '^[0-9]{8,8}[A-Za-z]$^');
         Assertion::string($password);
         Assertion::string($passwordVerified);
-        Assertion::minLength($password,5);
+        Assertion::minLength($password, 5);
         Assertion::same($password, $passwordVerified);
         Assertion::regex($birthDate, '^\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$^');
         $this->dni = $dni;

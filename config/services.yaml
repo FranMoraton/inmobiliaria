@@ -81,3 +81,9 @@ services:
 
     App\Domain\Model\Entity\User\Role\RoleRepo:
         alias: app.role_repository
+
+    # add onKernelException for return a json response with custom message error
+    App\Infrastructure\Service\Exceptions\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+

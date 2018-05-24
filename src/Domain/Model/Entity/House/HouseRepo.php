@@ -10,6 +10,7 @@ namespace App\Domain\Model\Entity\House;
 
 use App\Domain\Model\Entity\User\User;
 use App\Domain\Services\House\Specification\Specification;
+use Doctrine\ORM\QueryBuilder;
 
 interface HouseRepo
 {
@@ -21,4 +22,5 @@ interface HouseRepo
 
     public function findHouseByOwner(User $user): array;
 
+    public function filterHouses(int $page, $maxSellingPrize, $minSellingPrize, $city, $country): array;
 }

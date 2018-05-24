@@ -60,9 +60,9 @@ class UpdateUserByDni
 
             $user->setBirthDate(
                 new \DateTime(date_create(
-                    $updateUserByDniCommand->getBirthDate())
-                    ->format('Y-m-d'))
-        );
+                    $updateUserByDniCommand->getBirthDate()
+                )->format('Y-m-d'))
+            );
 
         $this->userRepository->persistAndFlush($user);
 
