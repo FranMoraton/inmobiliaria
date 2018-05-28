@@ -11,6 +11,7 @@ namespace App\Infrastructure\Controller\User;
 use App\Application\User\ListUserByDni\ListUserByDni;
 use App\Application\User\ListUserByDni\ListUserByDniCommand;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class ListUserByDniController
 {
@@ -27,12 +28,14 @@ class ListUserByDniController
     }
 
     /**
-     * @param string $dni
+     * @param Request $request
      * @return JsonResponse
      * @throws \Assert\AssertionFailedException
      */
-    public function __invoke(string $dni)
+    public function __invoke(Request $request)
     {
+        $content = json_decode($request->getContent());
+        $dni = $content->dni;
         $list = $this->handler->handle(new ListUserByDniCommand($dni));
         return new JsonResponse($list["data"], $list["code"]);
     }

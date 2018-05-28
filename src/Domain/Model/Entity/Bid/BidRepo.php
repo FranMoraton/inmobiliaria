@@ -18,4 +18,5 @@ interface BidRepo
     public function persistAndFlush(Bid $bid): void;
     public function findBidsByOwner(User $user): array;
     public function findByUserAndHouse(User $user, House $house): ?Bid;
+    public function findBidsByHouse($house): array;
 }

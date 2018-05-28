@@ -2,23 +2,23 @@
 /**
  * Created by PhpStorm.
  * User: Fran Moraton
- * Date: 18/05/2018
- * Time: 11:37
+ * Date: 28/05/2018
+ * Time: 9:42
  */
 
 namespace App\Infrastructure\Controller\Bid;
 
-use App\Application\Bid\ModifyBid\ModifyBid;
-use App\Application\Bid\ModifyBid\ModifyBidCommand;
+use App\Application\Bid\ListBidsByHouse\ListBidsByHouse;
+use App\Application\Bid\ListBidsByHouse\ListBidsByHouseCommand;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class ModifyBidController
+class ListBidsByHouseController
 {
 
     private $handler;
 
-    public function __construct(ModifyBid $handler)
+    public function __construct(ListBidsByHouse $handler)
     {
         $this->handler = $handler;
     }
@@ -31,12 +31,9 @@ class ModifyBidController
     public function __invoke(Request $request)
     {
         $content = json_decode($request->getContent());
-        $dni = $content->dni;
-        $house = $content->house;
-        $money = $content->money;
+        $houseId = $content->houseId;
 
-        $bid = $this->handler->handle(new ModifyBidCommand($dni, $house, $money));
-
-        return new JsonResponse($bid["data"], $bid["code"]);
+        $list = $this->handler->handle(new ListBidsByHouseCommand($houseId));
+        return new JsonResponse($list["data"], $list["code"]);
     }
 }

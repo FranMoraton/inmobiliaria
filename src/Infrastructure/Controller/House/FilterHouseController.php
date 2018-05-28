@@ -33,11 +33,12 @@ class FilterHouseController
      */
     public function __invoke(Request $request)
     {
-        $page = $request->request->get("page");
-        $maxPrize = $request->request->get("maxPrize");
-        $minPrize = $request->request->get("minPrize");
-        $city = $request->request->get("city");
-        $country = $request->request->get("country");
+        $content = json_decode($request->getContent());
+        $page = $content->page;
+        $maxPrize = $content->maxPrize;
+        $minPrize = $content->minPrize;
+        $city = $content->city;
+        $country = $content->country;
 
         $houses = $this->handler->handle(new FilterHouseCommand($page, $maxPrize, $minPrize, $city, $country));
 

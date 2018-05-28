@@ -34,15 +34,15 @@ class CreateHouseController
      */
     public function __invoke(Request $request)
     {
-        $dni = $request->request->get('dni');
-        $adress = $request->request->get('adress');
-        $sellingPrize = $request->request->get('sellingPrize');
-        $city = $request->request->get('city');
-        $country = $request->request->get('country');
-        $disableHouse = $request->request->get('disableHouse');
+        $content = json_decode($request->getContent());
+        $dni = $content->dni;
+        $adress = $content->adress;
+        $sellingPrize = $content->sellingPrize;
+        $city = $content->city;
+        $country = $content->country;
 
         $list = $this->handler
-            ->handle(new CreateHouseCommand($dni, $adress, $sellingPrize, $city, $country, $disableHouse));
+            ->handle(new CreateHouseCommand($dni, $adress, $sellingPrize, $city, $country));
 
         return new JsonResponse($list["data"], $list["code"]);
     }

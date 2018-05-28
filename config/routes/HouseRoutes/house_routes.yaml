@@ -9,14 +9,14 @@ ListHouseById:
     methods: [GET]
 
 ListHousesByOwner:
-    path: /{dni}/houses
+    path: /houses
     controller: App\Infrastructure\Controller\House\ListHouseByOwnerController:__invoke
-    methods: [GET]
+    methods: [POST]
 
 ListHouseBiddedByUser:
-    path: /{dni}/biddedhouses
+    path: /biddedhouses
     controller: App\Infrastructure\Controller\House\ListHouseBiddedByUserController:__invoke
-    methods: [GET]
+    methods: [POST]
 
 ModifyHouseWithOwnerAndId:
     path: /modify

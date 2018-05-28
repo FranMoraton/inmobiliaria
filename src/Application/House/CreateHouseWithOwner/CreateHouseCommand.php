@@ -20,7 +20,6 @@ class CreateHouseCommand
     private $country;
 
 
-
     /**
      * CreateHouseCommand constructor.
      * @param $dni
@@ -28,10 +27,9 @@ class CreateHouseCommand
      * @param $sellingPrize
      * @param $city
      * @param $country
-     * @param $disableHouse
      * @throws \Assert\AssertionFailedException
      */
-    public function __construct($dni, $adress, $sellingPrize, $city, $country, $disableHouse)
+    public function __construct($dni, $adress, $sellingPrize, $city, $country)
     {
         Assertion::regex($dni, '^[0-9]{8,8}[A-Za-z]$^');
         Assertion::string($adress);
@@ -46,7 +44,6 @@ class CreateHouseCommand
         $this->sellingPrize = $sellingPrize;
         $this->city = $city;
         $this->country = $country;
-
     }
 
     /**

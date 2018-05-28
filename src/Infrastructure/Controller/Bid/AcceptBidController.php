@@ -34,9 +34,10 @@ class AcceptBidController
      */
     public function __invoke(Request $request)
     {
-        $dniUser = $request->request->get('dni');
-        $bidId = $request->request->get('bidId');
-        $houseId = $request->request->get('houseId');
+        $content = json_decode($request->getContent());
+        $dniUser = $content->dni;
+        $bidId = $content->bidId;
+        $houseId = $content->houseId;
 
         $bid = $this->handler->handle(new AcceptBidCommand($dniUser, $bidId, $houseId));
         return new JsonResponse($bid["data"], $bid["code"]);

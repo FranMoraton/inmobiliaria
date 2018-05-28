@@ -33,10 +33,13 @@ class UpdateUserController
      */
     public function __invoke(Request $request)
     {
-        $dni = $request->request->get("dni");
-        $password = $request->request->get("password");
-        $passwordVerify = $request->request->get("passwordVerify");
-        $birthDate = $request->request->get("birthDate");
+        $content = json_decode($request->getContent());
+        $dni = $content->dni;
+        $password = $content->password;
+        $birthDate = $content->birthDate;
+        $passwordVerify = $content->passwordVerify;
+
+
 
         $userModified = $this->handler
             ->handle(new UpdateUserByDniCommand($dni, $password, $birthDate, $passwordVerify));

@@ -29,9 +29,10 @@ class RegisterUserController
      */
     public function __invoke(Request $request)
     {
-        $dni = $request->request->get("dni");
-        $password = $request->request->get("password");
-        $birthDate = $request->request->get("birthDate");
+        $content = json_decode($request->getContent());
+        $dni = $content->dni;
+        $password = $content->password;
+        $birthDate = $content->birthDate;
 
         $list = $this->handler->handle(new RegisterUserCommand($dni, $password, $birthDate));
 

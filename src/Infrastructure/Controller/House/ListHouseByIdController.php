@@ -8,7 +8,6 @@
 
 namespace App\Infrastructure\Controller\House;
 
-
 use App\Application\House\ListHouseById\ListHouseById;
 use App\Application\House\ListHouseById\ListHouseByIdCommand;
 use Symfony\Component\HttpFoundation\JsonResponse;

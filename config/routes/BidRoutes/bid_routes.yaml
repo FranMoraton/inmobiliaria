@@ -18,18 +18,23 @@ ListBidByOwner:
     controller: App\Infrastructure\Controller\Bid\ListBidsByOwnerController:__invoke
     methods: [GET]
 
+ListBidByHouse:
+    path: /house/bids
+    controller: App\Infrastructure\Controller\Bid\ListBidsByHouseController:__invoke
+    methods: [POST]
+
 ListBidById:
     path: /{id}
     controller: App\Infrastructure\Controller\Bid\ListByIdController:__invoke
     methods: [GET]
 
 CreateBidController:
-    path: /{dni}/{house}/new/{money}
+    path: /new
     controller: App\Infrastructure\Controller\Bid\CreateBidController:__invoke
-    methods: [GET]
+    methods: [POST]
 
 ModifyBidController:
-    path: /{dni}/{house}/modify/{money}
+    path: /modify
     controller: App\Infrastructure\Controller\Bid\ModifyBidController:__invoke
-    methods: [GET]
+    methods: [POST]
 

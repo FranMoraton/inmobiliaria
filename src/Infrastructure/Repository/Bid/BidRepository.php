@@ -38,6 +38,11 @@ class BidRepository extends EntityRepository implements BidRepo
         return $this->findBy([ "userBidding" => $user ]);
     }
 
+    public function findBidsByHouse($house): array
+    {
+        return $this->findBy([ "house" => $house ]);
+    }
+
     public function findByUserAndHouse(User $user, House $house): ?Bid
     {
         return $this->findOneBy([

@@ -21,7 +21,7 @@ class CheckMoneyBiddedOverMin implements Observer
         $this->stateException = false;
     }
 
-    public function __invoke(int $money, int $housePrize)
+    public function __invoke($money, $housePrize)
     {
         if ($money < $housePrize) {
             $this->stateException = true;

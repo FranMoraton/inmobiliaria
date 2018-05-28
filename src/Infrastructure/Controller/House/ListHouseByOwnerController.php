@@ -11,6 +11,7 @@ namespace App\Infrastructure\Controller\House;
 use App\Application\House\ListHouseByOwner\ListHouseByOwner;
 use App\Application\House\ListHouseByOwner\ListHouseByOwnerCommand;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class ListHouseByOwnerController
 {
@@ -27,12 +28,14 @@ class ListHouseByOwnerController
     }
 
     /**
-     * @param $dni
+     * @param Request $request
      * @return JsonResponse
      * @throws \Assert\AssertionFailedException
      */
-    public function __invoke($dni)
+    public function __invoke(Request $request)
     {
+        $content = json_decode($request->getContent());
+        $dni = $content->dni;
         $list = $this->handler->handle(new ListHouseByOwnerCommand($dni));
 
         return new JsonResponse($list["data"], $list["code"]);

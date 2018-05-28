@@ -3,9 +3,9 @@ ListUsers:
     controller: App\Infrastructure\Controller\User\ListUsersController:__invoke
 
 ListUserByDni:
-    path: /{dni}
+    path: /user
     controller: App\Infrastructure\Controller\User\ListUserByDniController:__invoke
-    methods: [GET]
+    methods: [POST]
 
 LogInUser:
     path: /login

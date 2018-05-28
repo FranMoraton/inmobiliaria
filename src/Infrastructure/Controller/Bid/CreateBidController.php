@@ -11,6 +11,7 @@ namespace App\Infrastructure\Controller\Bid;
 use App\Application\Bid\CreateBid\CreateBid;
 use App\Application\Bid\CreateBid\CreateBidCommand;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class CreateBidController
 {
@@ -22,14 +23,17 @@ class CreateBidController
     }
 
     /**
-     * @param $dni
-     * @param $house
-     * @param $money
+     * @param Request $request
      * @return JsonResponse
      * @throws \Assert\AssertionFailedException
      */
-    public function __invoke($dni, $house, $money)
+    public function __invoke(Request $request)
     {
+        $content = json_decode($request->getContent());
+        $dni = $content->dni;
+        $house = $content->house;
+        $money = $content->money;
+
         $bid = $this->handler->handle(new CreateBidCommand($dni, $house, $money));
 
         return new JsonResponse($bid["data"], $bid["code"]);

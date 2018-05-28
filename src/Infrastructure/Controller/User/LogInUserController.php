@@ -33,8 +33,9 @@ class LogInUserController
      */
     public function __invoke(Request $request)
     {
-        $dni = $request->request->get("dni");
-        $password = $request->request->get("password");
+        $content = json_decode($request->getContent());
+        $dni = $content->dni;
+        $password = $content->password;
 
         $list = $this->handler->handle(new LogInUserCommand($dni, $password));
 
