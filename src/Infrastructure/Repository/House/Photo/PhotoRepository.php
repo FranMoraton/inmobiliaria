@@ -9,9 +9,10 @@
 namespace App\Infrastructure\Repository\House\Photo;
 
 use App\Domain\Model\Entity\House\Photo\Photo;
+use App\Domain\Model\Entity\House\Photo\PhotoRepo;
 use Doctrine\ORM\EntityRepository;
 
-class PhotoRepository extends EntityRepository
+class PhotoRepository extends EntityRepository implements PhotoRepo
 {
     /**
      * @param Photo $photo

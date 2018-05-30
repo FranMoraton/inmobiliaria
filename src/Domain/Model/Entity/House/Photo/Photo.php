@@ -38,6 +38,16 @@ class Photo
      */
     private $house;
 
+    public function __construct($urlPhoto, $house)
+    {
+        $this->house = $house;
+        $this->urlPhoto = $urlPhoto;
+    }
+    public static function createFromApi($urlPhoto, $house): self
+    {
+        return new self($urlPhoto, $house);
+    }
+
     public function getId()
     {
         return $this->id;

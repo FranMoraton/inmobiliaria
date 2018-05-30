@@ -8,8 +8,9 @@
 
 namespace App\Domain\Model\Entity\House\Photo;
 
-
 interface PhotoRepo
 {
+    public function persistAndFlush(Photo $photo): void;
 
+    public function findAllPhotos();
 }

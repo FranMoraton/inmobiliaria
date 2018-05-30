@@ -27,3 +27,8 @@ CreateHouse:
     path: /create
     controller: App\Infrastructure\Controller\House\CreateHouseController:__invoke
     methods: [POST]
+
+UploadHousePhoto:
+    path: /photo/{houseId}
+    controller: App\Infrastructure\Controller\House\Photo\UploadPhotoHouseController:__invoke
+    methods: [POST]
