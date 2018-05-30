@@ -8,14 +8,14 @@ class UploadPhotoFormatAndPersist
     {
         $date = date('Y-m-d h:i:s');
 
-//LINUX
-//        $output = "./Uploads/House/".$id."_".$date."image.jpg";
-//        $urlDb = "/Uploads/House/".$id."_".$date."image.jpg";
-//        //unlink($output);
 
-        $urlUpload = __DIR__ . '/../../../../../public/Uploads/House'.$id."_".$date."image.jpg";
-        $urlDb = __DIR__ . '/../../../../../public/Uploads/House'.$id."_".$date."image.jpg";
-        $fp = fopen($urlUpload, 'w+b');
+        $urlUpload = "./Uploads/House/".$id."_".$date."image.jpg";
+        $urlDb = "/Uploads/House/".$id."_".$date."image.jpg";
+
+
+//        $urlUpload = __DIR__ . '\\..\\..\\..\\..\\..\\public\\Uploads\\House'.$id."_".$date."image.jpg";
+//        $urlDb = __DIR__ . '/../../../../../public/Uploads/House'.$id."_".$date."image.jpg";
+        $fp = fopen($urlUpload, 'w');
         fwrite($fp, $file);
 
         return  $urlDb;
