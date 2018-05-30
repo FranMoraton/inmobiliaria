@@ -1,23 +1,15 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Fran Moraton
+ * Date: 30/05/2018
+ * Time: 19:08
+ */
 
 namespace App\Infrastructure\Service\UploadPhotoFormatAndPersist;
 
-class UploadPhotoFormatAndPersist
+
+interface UploadPhotoFormatAndPersist
 {
-    public function execute($file, $id)
-    {
-        $date = date('Y-m-d h:i:s');
-
-
-        $urlUpload = "./Uploads/House/".$id."_".$date."image.jpg";
-        $urlDb = "/Uploads/House/".$id."_".$date."image.jpg";
-
-
-//        $urlUpload = __DIR__ . '\\..\\..\\..\\..\\..\\public\\Uploads\\House'.$id."_".$date."image.jpg";
-//        $urlDb = __DIR__ . '/../../../../../public/Uploads/House'.$id."_".$date."image.jpg";
-        $fp = fopen($urlUpload, 'w');
-        fwrite($fp, $file);
-
-        return  $urlDb;
-    }
+    public function execute($file, $id): string;
 }

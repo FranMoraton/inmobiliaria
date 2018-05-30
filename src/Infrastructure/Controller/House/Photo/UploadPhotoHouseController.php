@@ -11,20 +11,21 @@ use Symfony\Component\HttpFoundation\Request;
 class UploadPhotoHouseController
 {
     private $handler;
-    private $uploadPhotoFormatAndPersist;
+    private $uploadPhotoFormatAndPersistLinux;
 
     /**
      * UploadPhotoHouseController constructor.
      * @param UploadPhoto $handler
-     * @param UploadPhotoFormatAndPersist $uploadPhotoFormatAndPersist
+     * @param UploadPhotoFormatAndPersist $uploadPhotoFormatAndPersistLinux
      */
     public function __construct(
         UploadPhoto $handler,
-        UploadPhotoFormatAndPersist $uploadPhotoFormatAndPersist
+        UploadPhotoFormatAndPersist $uploadPhotoFormatAndPersistLinux
     ) {
         $this->handler = $handler;
-        $this->uploadPhotoFormatAndPersist = $uploadPhotoFormatAndPersist;
+        $this->uploadPhotoFormatAndPersistLinux = $uploadPhotoFormatAndPersistLinux;
     }
+
 
     /**
      * @param $houseId
@@ -40,7 +41,7 @@ class UploadPhotoHouseController
         $list = $this->handler
             ->handle(new UploadPhotoCommand(
                 $houseId,
-                $this->uploadPhotoFormatAndPersist->execute($file, $houseId)
+                $this->uploadPhotoFormatAndPersistLinux->execute($file, $houseId)
             ));
 
         return new JsonResponse($list["data"], $list["code"]);
