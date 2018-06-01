@@ -38,6 +38,10 @@ class LogInUser
     {
         $user = $this->findUserByDni->__invoke($logInUserCommand->getDni());
 
+        if (ListException::instance()->checkForException()) {
+            return ListException::instance()->firstException();
+        }
+
         $this->checkPasswordForLogIn->__invoke($user->getPassword(), $logInUserCommand->getPassword());
 
         if (ListException::instance()->checkForException()) {
